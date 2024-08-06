@@ -1,0 +1,75 @@
+# Importando as bibliotecas necessárias
+import gdown
+import pandas as pd
+import matplotlib.pyplot as plt
+import seaborn as sns
+
+# Baixar o arquivo do Google Drive
+url = "https://drive.google.com/uc?id=1aJmF3UUW59s3oL3saqi3W9csnYUYs4O4"
+output = "BTC-USD.csv"
+gdown.download(url, output, quiet=False)
+
+# Carregar o conjunto de dados
+df = pd.read_csv(output)
+
+# Exibir as primeiras linhas do conjunto de dados
+print("Primeiras linhas do conjunto de dados:")
+print(df.head())
+
+# Análise Exploratória de Dados (AED)
+print("\nInformações do conjunto de dados:")
+print(df.info())
+
+print("\nEstatísticas descritivas:")
+print(df.describe())
+
+# Visualização Gráfica: Histograma
+plt.figure(figsize=(10, 6))
+sns.histplot(df['Close'], bins=20, kde=True, color='blue')
+plt.title('Distribuição dos Preços de Fechamento do Bitcoin')
+plt.xlabel('Preço de Fechamento')
+plt.ylabel('Frequência')
+plt.show()
+
+# Visualização Gráfica: Gráfico de Dispersão
+plt.figure(figsize=(10, 6))
+plt.scatter(df['Date'], df['Close'], color='green', alpha=0.5)
+plt.title('Preço de Fechamento do Bitcoin ao Longo do Tempo')
+plt.xlabel('Data')
+plt.ylabel('Preço de Fechamento')
+plt.xticks(rotation=45)
+plt.show()
+
+# Visualização Gráfica: Gráfico de Barras
+plt.figure(figsize=(10, 6))
+sns.barplot(x=df['Date'].head(10), y=df['Volume'].head(10), palette="viridis")
+plt.title('Volume de Negociação do Bitcoin (Top 10 Dias)')
+plt.xlabel('Data')
+plt.ylabel('Volume')
+plt.xticks(rotation=45)
+plt.show()
+
+# Relatório Completo
+report = """
+Relatório de Análise de Dados do Bitcoin
+
+1. Análise Exploratória de Dados:
+   - O conjunto de dados contém informações sobre o Bitcoin.
+   - Foram analisadas as estatísticas descritivas dos dados.
+
+2. Visualização Gráfica:
+   - Histograma: Mostra a distribuição dos preços de fechamento do Bitcoin.
+   - Gráfico de Dispersão: Apresenta o preço de fechamento do Bitcoin ao longo do tempo.
+   - Gráfico de Barras: Exibe o volume de negociação do Bitcoin nos 10 principais dias.
+
+3. Insights:
+   - O histograma mostra que a maioria dos preços de fechamento está concentrada em torno de certos valores.
+   - O gráfico de dispersão mostra a tendência geral do preço do Bitcoin ao longo do tempo.
+   - O gráfico de barras destaca os dias com maior volume de negociação.
+
+4. Próximos Passos:
+   - Análises mais avançadas podem ser feitas, incluindo modelagem preditiva dos preços do Bitcoin.
+"""
+
+# Exibindo o relatório
+print(report)
